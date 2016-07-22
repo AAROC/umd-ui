@@ -1,0 +1,18 @@
+# Docker file for UMD User Interface
+#
+FROM centos:6
+MAINTAINER Bruce Becker <bbecker@csir.co.za>
+# We prepare the machine for ansble
+RUN yum clean all && \
+    yum -y install epel-release && \
+    yum groupinstall -y "Development tools" && \
+    yum -y install python-devel python-setuptools git python-pip libffi-devel
+RUN pip install --upgrade pip certifi urllib3[secure]
+RUN pip install ansible
+RUN mkdir /etc/ansible/
+RUN echo $'[local]\nlocalhost\n' | tee --append /etc/ansible/hosts
+RUN echo $'[UIs]\nlocalhost\n' | tee --append /etc/ansible/hosts
+RUN echo $'[uis]\nlocalhost\n' | tee --append /etc/ansible/hosts
+ADD /home/becker/Ops/AAROC/DevOps/Ansible /root/Ansible
+WORKDIR /root/Ansible
+RUN ansible-playbook -c local -i /etc/ansible/hosts uis.yml --skip-tags="slack"
