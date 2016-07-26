@@ -1,4 +1,4 @@
-# We need to test :
+  # We need to test :
 # Client access to the repositories (for various targets)
 # build-slave configuration
 sudo: required
@@ -20,7 +20,8 @@ install:
   - docker build -t ansiblecontainer -f Dockerfile.$OSDIR .
 
 script:
-  - docker run -t -P ansiblecontainer ansible all -m setup -c local
+  - docker run -t -P ansiblecontainer ansible-playbook -i /etc/hosts/inventory all -m setup -c local
+  - docker run -t -P -v /root/DevOps:/root/DevOps/ -w /root/DevOps/Ansible ansiblecontainer ansible-playbook -c local -i /etc/hosts/inventory ui.yml --skip-tags=slack
 # check that ansible is working
 
 after_success:
