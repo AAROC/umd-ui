@@ -1,7 +1,14 @@
 # Docker file for UMD User Interface
 #
-FROM aaroc/AnsibleContainer:centos6
+FROM centos:6
 MAINTAINER Bruce Becker <bbecker@csir.co.za>
+RUN yum clean all && \
+    yum -y install epel-release && \
+    yum groupinstall -y "Development tools" && \
+    yum -y install python-devel python-setuptools git python-pip libffi-devel openssl-devel
+RUN pip install --upgrade pip certifi urllib3[secure]
+RUN pip install ansible
+
 RUN mkdir /etc/ansible/
 RUN echo $'[local]\nlocalhost\n' | tee --append /etc/ansible/hosts
 RUN echo $'[UIs]\nlocalhost\n' | tee --append /etc/ansible/hosts
