@@ -4,6 +4,6 @@ FROM aaroc/ansiblecontainer:centos6
 MAINTAINER Bruce Becker <bbecker@csir.co.za>
 WORKDIR /root/
 RUN git clone https://github.com/AAROC/DevOps
+RUN ansible-galaxy install -f -p roles AAROC.cvmfs-client-2-2 && mv roles/AAROC.cvmfs-client-2-2 roles/cvmfs-client-2.2
 WORKDIR /root/DevOps/Ansible
-CMD echo $'[UIs] \n localhost \n[generic]\nUIs' > inventories/local
 RUN ansible-playbook -c local -i inventories/inventory.ui.local ui-container.yml --skip-tags="slack" -e SkipCRLs=true
