@@ -17,7 +17,7 @@ before_install:
 
 # Build the container
 install:
-  - docker build -t umd-ui -f Dockerfile.$OS .
+  - travis_wait docker build -t umd-ui -f Dockerfile.$OS .
 
 script:
   # - docker run -t -P umd-ui ansible-playbook -i /etc/hosts/inventory all -m setup -c local
