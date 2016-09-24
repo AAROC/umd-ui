@@ -23,8 +23,8 @@ script:
   # - docker run -t -P umd-ui ansible-playbook -i /etc/hosts/inventory all -m setup -c local
   # - docker run -t -P -v /root/DevOps:/root/DevOps/ -w /root/DevOps/Ansible ansiblecontainer ansible-playbook -c local -i /etc/hosts/inventory ui-container.yml --skip-tags=slack
   # check that we can run voms-proxy-info
-  - docker run -P umd-ui voms-proxy-init --voms ops
-  - docker run -P umd-ui lcg-infosites --vo ops ce
+  # - docker run -P umd-ui voms-proxy-init --voms ops
+  # - docker run -P umd-ui lcg-infosites --vo ops ce
 
 
 after_success:
